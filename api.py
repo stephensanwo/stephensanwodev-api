@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from blog.routes.blog import blog_post
+from src.routes.blog import blog_post
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, File, Form, UploadFile, Request
 from fastapi import FastAPI, HTTPException, status, Response, BackgroundTasks
 from ..schema.blog import Blog
+from ..database.blog import post_new_blog
 
 blog_post = APIRouter()
 
@@ -12,7 +13,8 @@ blog_post = APIRouter()
 @blog_post.post("/blog_post", status_code=201)
 async def prophet_model(blog: Blog, background_tasks: BackgroundTasks):
 
-    print(blog.id)
+    # Send blog data to db
+    res = await post_new_blog(blog.blog_post())
 
     # cache_df, errors, valid = await get_data_from_cache(prophet_data.project_name)
 
@@ -21,4 +23,4 @@ async def prophet_model(blog: Blog, background_tasks: BackgroundTasks):
 
     # res = await prophet_algorithm(cache_df, forecast_days=prophet_data.forecast_days)
 
-    return blog
+    return res

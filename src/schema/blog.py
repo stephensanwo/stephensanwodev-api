@@ -5,8 +5,8 @@ import uuid
 
 
 class Blog(BaseModel):
-    id: str = Field(title="The blog post ID - Auto generated",
-                    default=uuid.uuid4())
+    # id: str = Field(title="The blog post ID - Auto generated",
+    #                 default=uuid.uuid4())
     category: str = Field(
         title="Blog category name i.e. Python Development")
 
@@ -47,7 +47,6 @@ class Blog(BaseModel):
 
     def blog_post(self):
         return {
-            "id": self.id,
             "category": self.category,
             "sub_category": self.sub_category,
             "title": self.title,
@@ -61,7 +60,6 @@ class Blog(BaseModel):
             "series_name": self.series_name,
             "series_number": self.series_number,
             "featured_post": self.featured_post
-
         }
 
     class Config:
