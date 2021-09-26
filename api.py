@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from src.routes.blog import blog_post
+from src.routes.blog_metadata import blog_metadata
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
 api = FastAPI()
 api.include_router(blog_post)
+api.include_router(blog_metadata)
 
 origins = [
     "http://localhost:3010",
