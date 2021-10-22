@@ -1,8 +1,8 @@
 from bson import ObjectId
 from fastapi import APIRouter, File, Form, UploadFile, Request
 from fastapi import FastAPI, HTTPException, status, Response, BackgroundTasks
-from ..schema.blog import Blog, BlogCategory
-from ..database.blog import post_new_blog, add_post_to_series, get_all_blogs
+from ..schema.blog import Blog, BlogCategory, BlogList
+from ..database.blog import *
 from typing import Optional, List
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
@@ -19,47 +19,65 @@ blog_post = APIRouter()
 @blog_post.post("/blog_post", status_code=201)
 async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
 
-    # Add article to caegory ID
+    # Validate the Blog Category
+    err = await find_category(blog.category)
+    if err:
+        raise HTTPException(
+            status_code=400, detail="Blog category does not exist")
 
-    # If its a featured post - Add article to featured posts
+    # Validate Series ID
+    if blog.series_id:
+        error = await validate_series_id(blog.series_id)
+        if error:
+            raise HTTPException(
+                status_code=400, detail="Series does not exist")
 
     # Send blog data to db
     res = await post_new_blog(blog.blog_post())
 
-    # Add blog post to series if series_id is available
-    if blog.series_id:
-        series, error = await add_post_to_series(blog.series_id)
-
-        print(series)
-
-    # cache_df, errors, valid = await get_data_from_cache(prophet_data.project_name)
-
-    # if not valid:
-    #     raise HTTPException(status_code=400, detail=errors)
-
-    # res = await prophet_algorithm(cache_df, forecast_days=prophet_data.forecast_days)
-
-    # test
-
     return res
+
+# @route   GET /blog_post
+# @desc    Get single blog post
+# @access  Private
+
+
+@blog_post.get("/blog_post/{post_id}", status_code=201, response_model=Blog)
+async def blog_post_item(post_id: str):
+
+    # Get all blog items to the blog list
+    post = await get_blog_by_id(post_id)
+
+    # # Get suggested next reads from series
+    # suggested = await get_all_categories()
+
+    # # Get all featured articles to the blog list
+    # featured_posts = await get_featured_posts(limit)
+
+    # result = {"blog_posts": blog_list, "featured_posts": featured_posts,
+    #           "categories": blog_categories, "top_posts": []}
+
+    return post
 
 
 # @route   GET /blog_data
 # @desc    Get all blog data
 # @access  Private
 
-@blog_post.get("/blog_data", status_code=201, response_model=List[Blog])
-async def blog_data_consolidated(q: Optional[str] = None, ):
+@blog_post.get("/blog_data", status_code=201, response_model=BlogList)
+async def blog_data_consolidated(query_category: Optional[str] = None, tag_filter: Optional[str] = None, limit: int = 10, sort_by: Optional[str] = None):
     # Check data in cache
 
     # Get all blog items to the blog list
-    result = await get_all_blogs(100)
+    blog_list = await get_all_blogs(limit)
 
-    # result = jsonable_encoder(result)
+    # Get all blog topics
+    blog_categories = await get_all_categories()
 
     # Get all featured articles to the blog list
+    featured_posts = await get_featured_posts(limit)
 
-    # res = {"blog_list": result, "featured_articles": [],
-    #        "topics": [], "top_posts": []}
+    result = {"blog_posts": blog_list, "featured_posts": featured_posts,
+              "categories": blog_categories, "top_posts": []}
 
     return result

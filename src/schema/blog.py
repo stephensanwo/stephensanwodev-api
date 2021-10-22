@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, EmailStr, ValidationError, validator, root_validator
-from typing import Optional
+from typing import Optional, List
 from bson import ObjectId
 from datetime import datetime
 
@@ -155,3 +155,9 @@ class BlogCategory(BaseModel):
 class Errors(BaseModel):
     loc: str
     msg: str
+
+
+class BlogList(BaseModel):
+    blog_posts: List[Blog]
+    featured_posts: List[Blog]
+    categories: List[BlogCategory]
