@@ -11,7 +11,7 @@ blog_metadata = APIRouter()
 # @access  Private
 
 
-@blog_metadata.post("/blog_category", status_code=201)
+@blog_metadata.post("/api/v1/blog/blog_category", status_code=201)
 async def create_blog_category(category: BlogCategory):
     # Send blog category data to db
     res, error = await post_new_category(category.category_data())
@@ -24,7 +24,7 @@ async def create_blog_category(category: BlogCategory):
 # @route   [POST] /blog_series
 # @desc    Post new blog series
 # @access  Private
-@blog_metadata.post("/blog_series", status_code=201)
+@blog_metadata.post("/api/v1/blog/blog_series", status_code=201)
 async def create_blog_series(series: Series):
     # Send blog series data to db
     res, error = await post_new_series(series.series_data())

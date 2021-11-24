@@ -16,7 +16,7 @@ blog_post = APIRouter()
 # @access  Private
 
 
-@blog_post.post("/blog_post", status_code=201)
+@blog_post.post("/api/v1/blog/blog_post", status_code=201)
 async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
 
     # Validate the Blog Category
@@ -24,13 +24,6 @@ async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
     if err:
         raise HTTPException(
             status_code=400, detail="Blog category does not exist")
-
-    # Validate Series ID
-    if blog.series_id:
-        error = await validate_series_id(blog.series_id)
-        if error:
-            raise HTTPException(
-                status_code=400, detail="Series does not exist")
 
     # Send blog data to db
     res = await post_new_blog(blog.blog_post())
@@ -42,7 +35,7 @@ async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
 # @access  Private
 
 
-@blog_post.get("/blog_post/{post_id}", status_code=201, response_model=Blog)
+@blog_post.get("/api/v1/blog/blog_post/{post_id}", status_code=201, response_model=Blog)
 async def blog_post_item(post_id: str):
 
     # Get all blog items to the blog list
@@ -64,20 +57,18 @@ async def blog_post_item(post_id: str):
 # @desc    Get all blog data
 # @access  Private
 
-@blog_post.get("/blog_data", status_code=201, response_model=BlogList)
+@blog_post.get("/api/v1/blog/blog_data", status_code=201, response_model=BlogList)
 async def blog_data_consolidated(query_category: Optional[str] = None, tag_filter: Optional[str] = None, limit: int = 10, sort_by: Optional[str] = None):
-    # Check data in cache
 
     # Get all blog items to the blog list
     blog_list = await get_all_blogs(limit)
 
-    # Get all blog topics
-    blog_categories = await get_all_categories()
+    # # Get all blog topics
+    # blog_categories = await get_all_categories()
 
     # Get all featured articles to the blog list
-    featured_posts = await get_featured_posts(limit)
+    featured_posts = await get_featured_posts(3)
 
-    result = {"blog_posts": blog_list, "featured_posts": featured_posts,
-              "categories": blog_categories, "top_posts": []}
+    res = {"blog_posts": blog_list, "featured_posts": featured_posts}
 
-    return result
+    return res

@@ -12,12 +12,12 @@ MONGO_CONN_STRING = os.environ.get('MONGO_CONN_STRING')
 def create_db_connection():
     if os.environ.get('APP_ENV') == "development":
         client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
-        db = client.stephensanwodev_sandbox
+        db = client.blog_db_sandbox
         return db
 
     else:
         client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_CONN_STRING)
-        db = client.stephensanwodev_sandbox
+        db = client.blog_db
         return db
 
 

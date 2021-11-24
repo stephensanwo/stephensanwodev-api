@@ -22,6 +22,8 @@ class PyObjectId(ObjectId):
 
 class Blog(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    post_id: str = Field(
+        title="Blog post id -> Sequential post ID for blog post", required=True)
     category: str = Field(
         title="Blog category id -> this post will be added to the specified category ID", required=True)
 
@@ -52,8 +54,8 @@ class Blog(BaseModel):
     tldr: str = Field(
         title="Blog tldr", required=True)
 
-    series_id: str = Field(
-        title="Id for series, if part of a series")
+    series_title: str = Field(
+        title="Title for series, if part of a series")
 
     featured_post: bool = Field(
         title="Is blog post a featured article? -> This will add the article to featured article", required=True)
@@ -61,6 +63,7 @@ class Blog(BaseModel):
     def blog_post(self):
         return {
             "category": self.category,
+            "post_id": self.post_id,
             "sub_category": self.sub_category,
             "title": self.title,
             "description": self.description,
@@ -70,7 +73,7 @@ class Blog(BaseModel):
             "creation_date": self.creation_date,
             "content": self.content,
             "tldr": self.tldr,
-            "series_id": str(self.series_id),
+            "series_title": str(self.series_title),
             "featured_post": self.featured_post
         }
 
@@ -81,7 +84,6 @@ class Blog(BaseModel):
         schema_extra = {
             "example": {
 
-
             }
         }
 
@@ -90,6 +92,7 @@ class Series(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     series_name: Optional[str] = Field(
         title="Blog series name, if part of a series", required=True)
+
     series_posts: list = Field(
         title="Blog series posts, if part of a series", required=False)
 
@@ -110,14 +113,7 @@ class Series(BaseModel):
         }
 
 
-class TopPosts(BaseModel):
-    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    top_posts_id: list = Field(
-        title="ID List for featured articles", required=True)
-
-    def top_posts_id(self):
-        return {
-            "top_posts_id": self.top_posts_id}
+class FeaturedPosts(Blog):
 
     class Config:
         allow_population_by_field_name = True
@@ -160,4 +156,3 @@ class Errors(BaseModel):
 class BlogList(BaseModel):
     blog_posts: List[Blog]
     featured_posts: List[Blog]
-    categories: List[BlogCategory]
