@@ -24,7 +24,8 @@ origins = [
     "http://192.168.0.149:3010",
     "http://localhost:3019",
     "http://192.168.0.149:3019",
-    "https://ai.stephensanwo.dev"
+    "https://ai.stephensanwo.dev",
+    "https://www.stephensanwo.dev"
 
 ]
 
@@ -68,7 +69,7 @@ async def root():
 
 
 if __name__ == "__main__":
-    if os.environ.get('APP_ENV') == "production":
+    if os.environ.get('APP_ENV') == "development":
         uvicorn.run("api:api", host="0.0.0.0", port=2304, reload=True)
 
     else:
