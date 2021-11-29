@@ -11,8 +11,9 @@ MONGO_CONN_STRING = os.environ.get('MONGO_CONN_STRING')
 
 def create_db_connection():
     if os.environ.get('APP_ENV') == "development":
-        client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
-        db = client.blog_db_sandbox
+        #client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
+        client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_CONN_STRING)
+        db = client.blog_db
         return db
 
     else:
@@ -51,7 +52,6 @@ async def get_code_by_category(length, category):
     code = db.get_collection('code')
     codes = await code.find({'category': category}).to_list(length=length)
 
-    print(codes)
     return codes
 
 

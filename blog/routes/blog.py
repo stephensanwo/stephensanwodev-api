@@ -35,22 +35,12 @@ async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
 # @access  Private
 
 
-@blog_post.get("/api/v1/blog/blog_post/{post_id}", status_code=201, response_model=Blog)
-async def blog_post_item(post_id: str):
+@blog_post.get("/api/v1/blog/blog_post/{post_id}", status_code=201, response_model=BlogList)
+async def blog_post_item(post_id: int):
 
     # Get all blog items to the blog list
     post = await get_blog_by_id(post_id)
-
-    # # Get suggested next reads from series
-    # suggested = await get_all_categories()
-
-    # # Get all featured articles to the blog list
-    # featured_posts = await get_featured_posts(limit)
-
-    # result = {"blog_posts": blog_list, "featured_posts": featured_posts,
-    #           "categories": blog_categories, "top_posts": []}
-
-    return post
+    return {"blog_posts": post, "featured_posts": []}
 
 
 # @route   GET /blog_data
@@ -58,17 +48,24 @@ async def blog_post_item(post_id: str):
 # @access  Private
 
 @blog_post.get("/api/v1/blog/blog_data", status_code=201, response_model=BlogList)
-async def blog_data_consolidated(query_category: Optional[str] = None, tag_filter: Optional[str] = None, limit: int = 10, sort_by: Optional[str] = None):
+async def blog_data_consolidated(category: Optional[str] = None, tag_filter: Optional[str] = None, limit: int = 10, sort_by: Optional[str] = None):
 
-    # Get all blog items to the blog list
-    blog_list = await get_all_blogs(limit)
+    categories = ["All Categories", "APIs and Software Development", "AI and Deep Learning", "Web Development",
+                  "Mobile Development", "Data Structures and Algorithms", "Software Development", "Python", "Blockchain Development"]
 
-    # # Get all blog topics
-    # blog_categories = await get_all_categories()
+    if category not in categories:
+        raise HTTPException(
+            status_code=400, detail="Blog category does not exist")
 
-    # Get all featured articles to the blog list
-    featured_posts = await get_featured_posts(3)
+    if category == "All Categories":
+        # Get all blog items to the blog list
+        blog_list = await get_all_blogs(limit)
+        featured_posts = await get_featured_posts(2)
 
-    res = {"blog_posts": blog_list, "featured_posts": featured_posts}
+        return {"blog_posts": blog_list, "featured_posts": featured_posts}
 
-    return res
+    else:
+        blog_list = await get_blog_by_category(limit, category)
+        featured_posts = await get_featured_posts_for_category(2, category)
+
+        return {"blog_posts": blog_list, "featured_posts": featured_posts}

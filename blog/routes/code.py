@@ -39,7 +39,7 @@ async def code_post_data(code: Code, background_tasks: BackgroundTasks):
 @code_post.get("/api/v1/blog/code_data/{code_id}", status_code=201, response_model=CodeList)
 async def code_post_item(code_id: int):
 
-    # Get all blog items to the blog list
+    # Get all code items to the blog list
     res = await get_code_by_id(code_id)
 
     print(res)
@@ -54,14 +54,14 @@ async def code_post_item(code_id: int):
 @code_post.get("/api/v1/blog/code_data", status_code=201, response_model=CodeList)
 async def code_data_consolidated(filter: Optional[str] = None, limit: int = 10):
 
-    categories = ["Code", "Python", "JavaScript", "Tensorflow",
+    categories = ["All Code Snippets", "Python", "JavaScript", "Tensorflow",
                   "Redis", "Go", "MongoDB", "SQL", "React"]
 
     if filter not in categories:
         raise HTTPException(
             status_code=400, detail="Code category does not exist")
 
-    if filter == "Code":
+    if filter == "All Code Snippets":
         # Get all code items to the code list
         code_list = await get_all_code(limit)
         return {"code_posts": code_list}

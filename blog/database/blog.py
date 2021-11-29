@@ -11,8 +11,9 @@ MONGO_CONN_STRING = os.environ.get('MONGO_CONN_STRING')
 
 def create_db_connection():
     if os.environ.get('APP_ENV') == "development":
-        client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
-        db = client.blog_db_sandbox
+        #client = motor.motor_asyncio.AsyncIOMotorClient('localhost', 27017)
+        client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_CONN_STRING)
+        db = client.blog_db
         return db
 
     else:
@@ -46,12 +47,20 @@ async def get_all_blogs(length):
     return blogs
 
 
+async def get_blog_by_category(length, category):
+    db = create_db_connection()
+    blog = db.get_collection('blog')
+    blogs = await blog.find({'category': category}).to_list(length=length)
+    return blogs
+
+
 async def get_blog_by_id(post_id):
     db = create_db_connection()
     blog = db.get_collection('blog')
-    post = await blog.find_one({"_id": ObjectId(post_id)})
+    post = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).to_list(length=4)
 
     print(post)
+
     return post
 
 
@@ -108,6 +117,15 @@ async def get_featured_posts(length):
     blog = db.get_collection('blog')
 
     featured = await blog.find({'featured_post': {"$in": ["null", True]}}).to_list(length=length)
+    return featured
+
+
+async def get_featured_posts_for_category(length, category):
+    db = create_db_connection()
+    blog = db.get_collection('blog')
+
+    featured = await blog.find({'category': category, 'featured_post': {"$in": ["null", True]}}).to_list(length=length)
+
     return featured
 
 
