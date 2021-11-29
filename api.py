@@ -16,7 +16,6 @@ load_dotenv()
 api = FastAPI()
 api.include_router(blog_post)
 api.include_router(code_post)
-api.include_router(blog_metadata)
 api.include_router(chat)
 
 origins = [
