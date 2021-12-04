@@ -63,10 +63,10 @@ async def code_data_consolidated(filter: Optional[str] = None, limit: int = 10):
 
     if filter == "All Code Snippets":
         # Get all code items to the code list
-        code_list = await get_all_code(limit)
+        code_list = await get_all_code(limit, -1)
         return {"code_posts": code_list}
 
     else:
-        code_list = await get_code_by_category(limit, filter)
+        code_list = await get_code_by_category(limit, filter, -1)
 
         return {"code_posts": code_list}
