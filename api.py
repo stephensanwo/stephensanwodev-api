@@ -24,7 +24,8 @@ origins = [
     "http://localhost:3019",
     "http://192.168.0.149:3019",
     "https://ai.stephensanwo.dev",
-    "https://www.stephensanwo.dev"
+    "https://www.stephensanwo.dev",
+    "https://stephensanwo.dev"
 
 ]
 

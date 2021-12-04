@@ -20,7 +20,7 @@ if os.environ["APP_ENV"] == "production":
     print("Connection Okay")
 
 else:
-    connection = "redis://localhost:6379"
+    connection = f"redis://{REDIS_URL}"
 
 
 async def get_cookie_or_token(
