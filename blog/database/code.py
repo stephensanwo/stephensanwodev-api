@@ -39,18 +39,18 @@ async def post_new_code(code_data):
     return result
 
 
-async def get_all_code(length):
+async def get_all_code(length, sort_order):
     db = create_db_connection()
     code = db.get_collection('code')
-    codes = await code.find().to_list(length=length)
+    codes = await code.find().sort("code_id", sort_order).to_list(length=length)
 
     return codes
 
 
-async def get_code_by_category(length, category):
+async def get_code_by_category(length, category, sort_order):
     db = create_db_connection()
     code = db.get_collection('code')
-    codes = await code.find({'category': category}).to_list(length=length)
+    codes = await code.find({'category': category}).sort("code_id", sort_order).to_list(length=length)
 
     return codes
 
@@ -58,6 +58,6 @@ async def get_code_by_category(length, category):
 async def get_code_by_id(code_id):
     db = create_db_connection()
     code = db.get_collection('code')
-    post = await code.find({"code_id": {"$gte": str(code_id), "$lt": str(code_id + 4)}}).to_list(length=4)
+    post = await code.find({"code_id": {"$gte": str(code_id), "$lt": str(code_id + 4)}}).sort("code_id", 1).to_list(length=4)
 
     return post

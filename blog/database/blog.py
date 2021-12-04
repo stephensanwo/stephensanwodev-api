@@ -39,18 +39,18 @@ async def post_new_blog(blog_data):
     return result
 
 
-async def get_all_blogs(length):
+async def get_all_blogs(length, sort_order):
     db = create_db_connection()
     blog = db.get_collection('blog')
-    blogs = await blog.find().to_list(length=length)
+    blogs = await blog.find().sort("post_id", sort_order).to_list(length=length)
 
     return blogs
 
 
-async def get_blog_by_category(length, category):
+async def get_blog_by_category(length, category, sort_order):
     db = create_db_connection()
     blog = db.get_collection('blog')
-    blogs = await blog.find({'category': category}).to_list(length=length)
+    blogs = await blog.find({'category': category}).sort("post_id", sort_order).to_list(length=length)
     return blogs
 
 
@@ -112,19 +112,19 @@ Featured Posts
 """
 
 
-async def get_featured_posts(length):
+async def get_featured_posts(length, sort_order):
     db = create_db_connection()
     blog = db.get_collection('blog')
 
-    featured = await blog.find({'featured_post': {"$in": ["null", True]}}).to_list(length=length)
+    featured = await blog.find({'featured_post': {"$in": ["null", True]}}).sort("post_id", sort_order).to_list(length=length)
     return featured
 
 
-async def get_featured_posts_for_category(length, category):
+async def get_featured_posts_for_category(length, category, sort_order):
     db = create_db_connection()
     blog = db.get_collection('blog')
 
-    featured = await blog.find({'category': category, 'featured_post': {"$in": ["null", True]}}).to_list(length=length)
+    featured = await blog.find({'category': category, 'featured_post': {"$in": ["null", True]}}).sort("post_id", sort_order).to_list(length=length)
 
     return featured
 

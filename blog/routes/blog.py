@@ -59,13 +59,13 @@ async def blog_data_consolidated(category: Optional[str] = None, tag_filter: Opt
 
     if category == "All Categories":
         # Get all blog items to the blog list
-        blog_list = await get_all_blogs(limit)
-        featured_posts = await get_featured_posts(2)
+        blog_list = await get_all_blogs(limit, -1)
+        featured_posts = await get_featured_posts(2, 1)
 
         return {"blog_posts": blog_list, "featured_posts": featured_posts}
 
     else:
-        blog_list = await get_blog_by_category(limit, category)
-        featured_posts = await get_featured_posts_for_category(2, category)
+        blog_list = await get_blog_by_category(limit, category, -1)
+        featured_posts = await get_featured_posts_for_category(2, category, -1)
 
         return {"blog_posts": blog_list, "featured_posts": featured_posts}
