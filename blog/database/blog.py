@@ -59,9 +59,19 @@ async def get_blog_by_id(post_id):
     blog = db.get_collection('blog')
     post = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).to_list(length=4)
 
-    print(post)
-
     return post
+
+
+async def get_blog_by_title(title):
+    db = create_db_connection()
+    blog = db.get_collection('blog')
+    post = await blog.find_one({"title": title})
+
+    post_id = int(post["post_id"])
+
+    posts = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).to_list(length=4)
+
+    return posts
 
 
 """
