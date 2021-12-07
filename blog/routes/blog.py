@@ -35,25 +35,18 @@ async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
 # @access  Private
 
 
-@blog_post.get("/api/v1/blog/blog_post/{post_id}", status_code=201, response_model=BlogList)
-async def blog_post_item(post_id: int):
+@blog_post.get("/api/v1/blog/blog_post", status_code=201, response_model=BlogList)
+async def blog_post_item(post_id: Optional[int] = None, post_url: Optional[str] = None):
 
-    # Get all blog items to the blog list
-    post = await get_blog_by_id(post_id)
-    return {"blog_posts": post, "featured_posts": []}
+    if post_url != None:
+        # Get all blog items to the blog list
+        post = await get_blog_by_url(post_url)
+        return {"blog_posts": post, "featured_posts": []}
 
-
-# @route   GET /blog_post
-# @desc    Get single blog post
-# @access  Private
-
-
-@blog_post.get("/api/v1/blog/blog_post_title/{post_title}", status_code=201, response_model=BlogList)
-async def blog_post_title_item(post_title: str):
-
-    # Get all blog items to the blog list
-    post = await get_blog_by_title(post_title)
-    return {"blog_posts": post, "featured_posts": []}
+    else:
+        # Get all blog items to the blog list
+        post = await get_blog_by_id(post_id)
+        return {"blog_posts": post, "featured_posts": []}
 
 
 # @route   GET /blog_data

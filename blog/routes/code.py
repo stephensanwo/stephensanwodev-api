@@ -36,15 +36,18 @@ async def code_post_data(code: Code, background_tasks: BackgroundTasks):
 # @access  Private
 
 
-@code_post.get("/api/v1/blog/code_data/{code_id}", status_code=201, response_model=CodeList)
-async def code_post_item(code_id: int):
+@code_post.get("/api/v1/blog/code_post", status_code=201, response_model=CodeList)
+async def code_post_item(code_id: Optional[int] = None, code_url: Optional[str] = None):
 
-    # Get all code items to the blog list
-    res = await get_code_by_id(code_id)
+    if code_url != None:
+        # Get all blog items to the blog list
+        res = await get_code_by_url(code_url)
+        return {"code_posts": res}
 
-    print(res)
-
-    return {"code_posts": res}
+    else:
+        # Get all code items to the blog list
+        res = await get_code_by_id(code_id)
+        return {"code_posts": res}
 
 
 # @route   GET /code_data
