@@ -37,6 +37,10 @@ class Code(BaseModel):
     tags: list = Field(
         title="Code post tags", required=True)
 
+    code_url: str = Field(
+        title="URL extension of the code post"
+    )
+
     author: str = Field(
         title="Code post author", required=True)
 
@@ -51,6 +55,7 @@ class Code(BaseModel):
             "description": self.description,
             "tags": self.tags,
             "author": self.author,
+            "code_url": self.code_url,
             "creation_date": self.creation_date,
         }
 

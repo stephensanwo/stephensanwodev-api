@@ -57,6 +57,10 @@ class Blog(BaseModel):
     series_title: str = Field(
         title="Title for series, if part of a series")
 
+    post_url: str = Field(
+        title="URL extension of the blog post"
+    )
+
     featured_post: bool = Field(
         title="Is blog post a featured article? -> This will add the article to featured article", required=True)
 
@@ -74,6 +78,7 @@ class Blog(BaseModel):
             "content": self.content,
             "tldr": self.tldr,
             "series_title": str(self.series_title),
+            "post_url": self.post_url,
             "featured_post": self.featured_post
         }
 

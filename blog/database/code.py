@@ -61,3 +61,15 @@ async def get_code_by_id(code_id):
     post = await code.find({"code_id": {"$gte": str(code_id), "$lt": str(code_id + 4)}}).sort("code_id", 1).to_list(length=4)
 
     return post
+
+
+async def get_code_by_url(code_url):
+    db = create_db_connection()
+    code = db.get_collection('code')
+    post = await code.find_one({"code_url": code_url})
+
+    code_id = int(post["code_id"])
+
+    posts = await code.find({"code_id": {"$gte": str(code_id), "$lt": str(code_id + 3)}}).sort("code_id", 1).to_list(length=4)
+
+    return posts

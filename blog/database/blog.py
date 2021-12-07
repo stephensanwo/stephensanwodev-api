@@ -57,19 +57,19 @@ async def get_blog_by_category(length, category, sort_order):
 async def get_blog_by_id(post_id):
     db = create_db_connection()
     blog = db.get_collection('blog')
-    post = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).to_list(length=4)
+    post = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).sort("post_id", 1).to_list(length=4)
 
     return post
 
 
-async def get_blog_by_title(title):
+async def get_blog_by_url(post_url):
     db = create_db_connection()
     blog = db.get_collection('blog')
-    post = await blog.find_one({"title": title})
+    post = await blog.find_one({"post_url": post_url})
 
     post_id = int(post["post_id"])
 
-    posts = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).to_list(length=4)
+    posts = await blog.find({"post_id": {"$gte": str(post_id), "$lt": str(post_id + 3)}}).sort("post_id", 1).to_list(length=4)
 
     return posts
 
