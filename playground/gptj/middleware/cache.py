@@ -13,7 +13,7 @@ if os.environ["APP_ENV"] == "production":
     connection = f"redis://{REDIS_URL}"
 
 else:
-    connection = "redis://localhost:6379"
+    connection = f"redis://{REDIS_URL}"
 
 
 async def parse_data_to_cache(token, data):

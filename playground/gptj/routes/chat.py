@@ -79,22 +79,22 @@ async def refresh_token(token: str):
 @chat.websocket("/api/v1/playground/chat/{id}")
 async def websocket_endpoint(websocket: WebSocket = WebSocket, id: str = str, token: Optional[str] = None, cookie_or_token: str = Depends(get_cookie_or_token), background_tasks: BackgroundTasks = BackgroundTasks()):
     await websocket.accept()
+    data = await websocket.receive_text()
+    await parse_data_to_cache(token=cookie_or_token, data={"Human": f"{data}"})
+
+    history = await get_data_from_cache(token=cookie_or_token)
+
+    context = f"""{history} Bot:"""
+
+    print(context)
+
+    # response = f"GPT-J-6b is currently offline, please try again later {id}"
+
+    response = GPTJ.generate(context=context,
+                             token_max_length=128, temperature=1.0, top_probability=0.9)
+
+    await parse_data_to_cache(token=cookie_or_token, data={"Bot": f"{response.strip()}"})
+
     while True:
-        data = await websocket.receive_text()
-
-        await parse_data_to_cache(token=cookie_or_token, data={"Human": f"{data}"})
-
-        history = await get_data_from_cache(token=cookie_or_token)
-
-        context = f"""{history} Bot:"""
-
-        print(context)
-
-        # response = f"GPT-J-6b is currently offline, please try again later {id}"
-
-        response = GPTJ.generate(context=context,
-                                 token_max_length=128, temperature=1.0, top_probability=0.9)
-
-        await parse_data_to_cache(token=cookie_or_token, data={"Bot": f"{response.strip()}"})
 
         await websocket.send_text(f"GPT-J BOT: {response}")
