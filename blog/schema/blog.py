@@ -22,37 +22,37 @@ class PyObjectId(ObjectId):
 
 class Blog(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    post_id: str = Field(
-        title="Blog post id -> Sequential post ID for blog post", required=True)
-    category: str = Field(
-        title="Blog category id -> this post will be added to the specified category ID", required=True)
+    post_id: str = Field(...,
+                         title="Blog post id -> Sequential post ID for blog post")
+    category: str = Field(...,
+                          title="Blog category id -> this post will be added to the specified category ID")
 
-    sub_category: str = Field(
-        title="Blog sub category string, this can vary i.e. From Scripting to Software", required=True)
+    sub_category: str = Field(...,
+                              title="Blog sub category string, this can vary i.e. From Scripting to Software")
 
-    title: str = Field(
-        title="Blog title i.e. The Import Module, Python's Import System In Software Development", required=True)
+    title: str = Field(...,
+                       title="Blog title i.e. The Import Module, Python's Import System In Software Development")
 
-    description: str = Field(
-        title="Blog short description", required=True)
+    description: str = Field(...,
+                             title="Blog short description")
 
-    tags: list = Field(
-        title="Blog post tags", required=True)
+    tags: list = Field(...,
+                       title="Blog post tags")
 
-    image_url: str = Field(
-        title="Blog title image - AWS Cloudfront", required=True)
+    image_url: str = Field(...,
+                           title="Blog title image - AWS Cloudfront")
 
-    author: str = Field(
-        title="Blog post author", required=True)
+    author: str = Field(...,
+                        title="Blog post author")
 
     creation_date: datetime = Field(
         default=datetime.now(), title="Date created")
 
-    content: list = Field(
-        title="Blog post table of content", required=True)
+    content: list = Field(...,
+                          title="Blog post table of content")
 
-    tldr: str = Field(
-        title="Blog tldr", required=True)
+    tldr: str = Field(...,
+                      title="Blog tldr")
 
     series_title: str = Field(
         title="Title for series, if part of a series")
@@ -61,8 +61,8 @@ class Blog(BaseModel):
         title="URL extension of the blog post"
     )
 
-    featured_post: bool = Field(
-        title="Is blog post a featured article? -> This will add the article to featured article", required=True)
+    featured_post: bool = Field(...,
+                                title="Is blog post a featured article? -> This will add the article to featured article")
 
     def blog_post(self):
         return {
@@ -95,8 +95,8 @@ class Blog(BaseModel):
 
 class Series(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    series_name: Optional[str] = Field(
-        title="Blog series name, if part of a series", required=True)
+    series_name: Optional[str] = Field(...,
+                                       title="Blog series name, if part of a series")
 
     series_posts: list = Field(
         title="Blog series posts, if part of a series", required=False)
@@ -134,8 +134,8 @@ class FeaturedPosts(Blog):
 
 class BlogCategory(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    category_name: str = Field(
-        title="Blog Category Name", required=True)
+    category_name: str = Field(...,
+                               title="Blog Category Name")
 
     def category_data(self):
         return {
