@@ -22,27 +22,27 @@ class PyObjectId(ObjectId):
 
 class Code(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
-    code_id: str = Field(
-        title="Code post id -> Sequential post ID for code post", required=True)
+    code_id: str = Field(...,
+                         title="Code post id -> Sequential post ID for code post")
 
-    category: str = Field(
-        title="Code category id -> this post will be added to the specified category ID", required=True)
+    category: str = Field(...,
+                          title="Code category id -> this post will be added to the specified category ID")
 
-    title: str = Field(
-        title="Code title i.e. The Import Module, Python's Import System In Software Development", required=True)
+    title: str = Field(...,
+                       title="Code title i.e. The Import Module, Python's Import System In Software Development")
 
-    description: str = Field(
-        title="Code short description", required=True)
+    description: str = Field(...,
+                             title="Code short description")
 
-    tags: list = Field(
-        title="Code post tags", required=True)
+    tags: list = Field(...,
+                       title="Code post tags")
 
     code_url: str = Field(
         title="URL extension of the code post"
     )
 
-    author: str = Field(
-        title="Code post author", required=True)
+    author: str = Field(...,
+                        title="Code post author")
 
     creation_date: datetime = Field(
         default=datetime.now(), title="Date created")

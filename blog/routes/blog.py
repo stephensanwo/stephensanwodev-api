@@ -35,7 +35,7 @@ async def blog_post_data(blog: Blog, background_tasks: BackgroundTasks):
 # @access  Private
 
 
-@blog_post.get("/api/v1/blog/blog_post", status_code=201, response_model=BlogList)
+@blog_post.get("/api/v1/blog/blog_post", status_code=200, response_model=BlogList)
 async def blog_post_item(post_id: Optional[int] = None, post_url: Optional[str] = None):
 
     if post_url != None:
@@ -53,7 +53,7 @@ async def blog_post_item(post_id: Optional[int] = None, post_url: Optional[str] 
 # @desc    Get all blog data
 # @access  Private
 
-@blog_post.get("/api/v1/blog/blog_data", status_code=201, response_model=BlogList)
+@blog_post.get("/api/v1/blog/blog_data", status_code=200, response_model=BlogList)
 async def blog_data_consolidated(category: Optional[str] = None, tag_filter: Optional[str] = None, limit: int = 10, sort_by: Optional[str] = None):
 
     categories = ["All Categories", "APIs and Software Development", "AI and Deep Learning", "Web Development",

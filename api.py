@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from blog.routes.blog import blog_post
 from blog.routes.code import code_post
-from blog.routes.blog_metadata import blog_metadata
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from gunicorn.app.base import BaseApplication

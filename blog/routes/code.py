@@ -36,7 +36,7 @@ async def code_post_data(code: Code, background_tasks: BackgroundTasks):
 # @access  Private
 
 
-@code_post.get("/api/v1/blog/code_post", status_code=201, response_model=CodeList)
+@code_post.get("/api/v1/blog/code_post", status_code=200, response_model=CodeList)
 async def code_post_item(code_id: Optional[int] = None, code_url: Optional[str] = None):
 
     if code_url != None:
@@ -54,7 +54,7 @@ async def code_post_item(code_id: Optional[int] = None, code_url: Optional[str] 
 # @desc    Get all code data
 # @access  Private
 
-@code_post.get("/api/v1/blog/code_data", status_code=201, response_model=CodeList)
+@code_post.get("/api/v1/blog/code_data", status_code=200, response_model=CodeList)
 async def code_data_consolidated(filter: Optional[str] = None, limit: int = 10):
 
     categories = ["All Code Snippets", "Python", "JavaScript", "Tensorflow",
