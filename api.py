@@ -79,7 +79,7 @@ if __name__ == "__main__":
             "accesslog": "-",
             "errorlog": "-",
             "worker_class": "uvicorn.workers.UvicornWorker",
-            "timeout": "0"
+            "timeout": 0
         }
 
         StandaloneApplication(api, options).run()
