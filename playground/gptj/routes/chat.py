@@ -67,6 +67,7 @@ async def token_generator(name: str, request: Request, background_tasks: Backgro
 async def refresh_token(token: str):
 
     redis = await aioredis.from_url(url=connection, port=17446, db=0, password=REDIS_AUTH)
+
     await redis.delete(token)
 
     return None
