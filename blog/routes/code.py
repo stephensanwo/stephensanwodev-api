@@ -17,7 +17,6 @@ code_post = APIRouter()
 
 @code_post.post("/api/v1/blog/code_post", status_code=201)
 async def code_post_data(code: Code, background_tasks: BackgroundTasks):
-
     # Validate the Code Category
     categories = ["Python", "JavaScript", "Tensorflow",
                   "Redis", "Go", "MongoDB", "SQL", "React"]
