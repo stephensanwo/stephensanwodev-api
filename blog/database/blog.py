@@ -42,7 +42,7 @@ async def post_new_blog(blog_data):
 async def get_all_blogs(length, sort_order):
     db = create_db_connection()
     blog = db.get_collection('blog')
-    blogs = await blog.find().sort("post_id", sort_order).to_list(length=length)
+    blogs = await blog.find().sort("_id", sort_order).to_list(length=length)
 
     return blogs
 
