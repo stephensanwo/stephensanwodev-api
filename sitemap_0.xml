@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/blog</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/apps</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/code</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/blog/build-a-full-stack-ai-chatbot-part-i-introduction</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/blog/build-a-full-stack-ai-chatbot-part-ii-gpt-j-6b-wrapper</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/blog/intermediate-python-why-you-should-use-virtual-environments-in-python-and-how-to-set-it-up</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/blog/getting-stuck-on-coding-basics-read-this</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/code/react-query-usequery-setup-with-axios-and-context-api</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/code/cross-origin-resource-sharing-cors-in-fastapi</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/code/fastapi-boiler-plate-set-up</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/code/setting-up-python-logging</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+    <url>
+        <loc>https://www.stephensanwo.dev/code/basic-flask-api-boiler-plate</loc>
+        <lastmod>2022-01-14</lastmod>
+        <changefreq>never</changefreq>
+        <priority>1.0</priority>        
+    </url>
+    
+</urlset>

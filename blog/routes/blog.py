@@ -57,7 +57,7 @@ async def blog_post_item(post_id: Optional[int] = None, post_url: Optional[str] 
 async def blog_data_consolidated(category: Optional[str] = None, tag_filter: Optional[str] = None, limit: int = 10, sort_by: Optional[str] = None):
 
     categories = ["All Categories", "APIs and Software Development", "AI and Deep Learning", "Web Development",
-                  "Mobile Development", "Data Structures and Algorithms", "Software Development", "Python", "Blockchain Development", "Developer Guides"]
+                  "Mobile Development", "Data Structures and Algorithms", "Software Development", "Python", "Blockchain Development", "Developer Guides", "Code Snippet"]
 
     if category not in categories:
         raise HTTPException(
